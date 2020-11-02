@@ -32,6 +32,7 @@ extern void MQTTtoBT(char* topicOri, JsonObject& RFdata);
 
 /*----------------------BT topics & parameters-------------------------*/
 #define subjectBTtoMQTT    "/BTtoMQTT"
+#define subjectBTtoMQTText subjectBTtoMQTT "/+"
 #define subjectMQTTtoBTset "/commands/MQTTtoBT/config"
 #define MinimumRSSI        -100 //default minimum rssi value, all the devices below -90 will not be reported
 

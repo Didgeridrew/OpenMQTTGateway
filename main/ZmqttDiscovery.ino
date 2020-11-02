@@ -120,11 +120,32 @@ void createDiscovery(char* sensor_type,
 void pubMqttDiscovery() {
   Log.trace(F("omgStatusDiscovery" CR));
   createDiscovery("binary_sensor", //set Type
-                  will_Topic, Gateway_Name, (char*)getUniqueId("", "").c_str(), //set state_topic,name,uniqueId
+                  will_Topic, Gateway_Name, (char*)getUniqueId("connectivity", "").c_str(), //set state_topic,name,uniqueId
                   will_Topic, "connectivity", "", //set availability_topic,device_class,value_template,
                   Gateway_AnnouncementMsg, will_Message, "", //set,payload_on,payload_off,unit_of_meas,
                   0, //set  off_delay
-                  Gateway_AnnouncementMsg, will_Message, false, "" //set,payload_avalaible,payload_not avalaible   ,is a child device, command topic
+                  Gateway_AnnouncementMsg, will_Message, true, "" //set,payload_avalaible,payload_not avalaible   ,is a child device, command topic
+  );
+  createDiscovery("sensor", //set Type
+                  subjectSYStoMQTT, "uptime", (char*)getUniqueId("uptime", "").c_str(), //set state_topic,name,uniqueId
+                  "", "", "{{ value_json.uptime }}", //set availability_topic,device_class,value_template,
+                  "", "", "ms", //set,payload_on,payload_off,unit_of_meas,
+                  0, //set  off_delay
+                  "", "", true, "" //set,payload_avalaible,payload_not avalaible   ,is a child device, command topic
+  );
+  createDiscovery("sensor", //set Type
+                  subjectSYStoMQTT, "freemem", (char*)getUniqueId("freemem", "").c_str(), //set state_topic,name,uniqueId
+                  "", "", "{{ value_json.freemem }}", //set availability_topic,device_class,value_template,
+                  "", "", "B", //set,payload_on,payload_off,unit_of_meas,
+                  0, //set  off_delay
+                  "", "", true, "" //set,payload_avalaible,payload_not avalaible   ,is a child device, command topic
+  );
+  createDiscovery("sensor", //set Type
+                  subjectSYStoMQTT, "lowpowermode", (char*)getUniqueId("lowpowermode", "").c_str(), //set state_topic,name,uniqueId
+                  "", "", "{{ value_json.lowpowermode }}", //set availability_topic,device_class,value_template,
+                  "", "", "", //set,payload_on,payload_off,unit_of_meas,
+                  0, //set  off_delay
+                  "", "", true, "" //set,payload_avalaible,payload_not avalaible   ,is a child device, command topic
   );
   createDiscovery("switch", //set Type
                   will_Topic, "restart OMG", (char*)getUniqueId("restart", "").c_str(), //set state_topic,name,uniqueId
@@ -476,8 +497,8 @@ void pubMqttDiscovery() {
   Log.trace(F("CreateDiscoverySensor" CR));
   //trc(gatewayBT[1]);
   createDiscovery(gatewayBT[0],
-                  subjectBTtoMQTT, gatewayBT[1], (char*)getUniqueId(gatewayBT[1], gatewayBT[2]).c_str(),
-                  will_Topic, gatewayBT[3], gatewayBT[4],
+                  subjectBTtoMQTText, gatewayBT[1], (char*)getUniqueId(gatewayBT[1], gatewayBT[2]).c_str(),
+                  "", gatewayBT[3], gatewayBT[4],
                   gatewayBT[5], gatewayBT[6], gatewayBT[7],
                   0, "", "", true, "");
 #  endif
